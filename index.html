@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Simulador de Física</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    text-align: center;
+}
+.container {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 800px;
+    margin: auto;
+}
+input {
+    width: 70%;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+    border: none;
+}
+button {
+    padding: 12px;
+    border-radius: 10px;
+    background: #38bdf8;
+    border: none;
+    cursor: pointer;
+}
+h2 { color: #38bdf8; }
+.section { margin-top: 20px; }
+</style>
+
+</head>
+
+<body>
+
+<h1>💨 Simulador Completo de Física</h1>
+
+<div class="container">
+
+<div class="section">
+<h2>Datos generales</h2>
+
+<input id="masa" placeholder="Masa (kg)">
+<input id="velocidad" placeholder="Velocidad (m/s)">
+<input id="tiempo" placeholder="Tiempo (s)">
+<input id="distancia" placeholder="Distancia (m)">
+<input id="fuerza" placeholder="Fuerza (N)">
+<input id="area" placeholder="Área (m²)">
+<input id="volumen" placeholder="Volumen (m³)">
+<input id="altura" placeholder="Altura (m)">
+<input id="temperatura" placeholder="Temperatura (K)">
+<input id="moles" placeholder="Moles (n)">
+<input id="diametro" placeholder="Diámetro (m)">
+</div>
+
+<button onclick="calcular()">Calcular</button>
+
+<div id="resultado"></div>
+
+</div>
+
+<script>
+function calcular(){
+
+let m = parseFloat(masa.value)||1;
+let v = parseFloat(velocidad.value)||1;
+let t = parseFloat(tiempo.value)||1;
+let d = parseFloat(distancia.value)||1;
+let F = parseFloat(fuerza.value)||1;
+let A = parseFloat(area.value)||1;
+let V = parseFloat(volumen.value)||1;
+let h = parseFloat(altura.value)||1;
+let T = parseFloat(temperatura.value)||300;
+let n = parseFloat(moles.value)||1;
+let D = parseFloat(diametro.value)||0.1;
+
+let rho = 1.2;
+let mu = 1.8e-5;
+let g = 9.81;
+let R = 8.314;
+
+// CALCULOS
+let a = v/t;
+let trabajo = F*d;
+let Ec = 0.5*m*v*v;
+let potencia = trabajo/t;
+let presion = F/A;
+let gas = (n*R*T)/V;
+let momento = m*v;
+let densidad = m/V;
+let Re = (rho*v*D)/mu;
+let Ep = m*g*h;
+let energiaTotal = Ec + Ep;
+
+// RESULTADO
+let res = `
+<h2>Resultados</h2>
+
+<h3>Mecánica</h3>
+Aceleración: ${a.toFixed(2)} m/s²<br>
+Trabajo: ${trabajo.toFixed(2)} J<br>
+Potencia: ${potencia.toFixed(2)} W<br>
+
+<h3>Energía</h3>
+Energía cinética: ${Ec.toFixed(2)} J<br>
+Energía potencial: ${Ep.toFixed(2)} J<br>
+Energía total: ${energiaTotal.toFixed(2)} J<br>
+
+<h3>Fluidos</h3>
+Presión: ${presion.toFixed(2)} Pa<br>
+Reynolds: ${Re.toFixed(0)}<br>
+
+<h3>Gases</h3>
+Presión gas ideal: ${gas.toFixed(2)} Pa<br>
+
+<h3>Otros</h3>
+Momento: ${momento.toFixed(2)} kg·m/s<br>
+Densidad: ${densidad.toFixed(2)} kg/m³<br>
+`;
+
+if(Re > 4000){
+res += "<br>Flujo turbulento ✅";
+}else{
+res += "<br>Flujo laminar ❌";
+}
+
+document.getElementById("resultado").innerHTML = res;
+
+}
+</script>
+
+</body>
+</html>
